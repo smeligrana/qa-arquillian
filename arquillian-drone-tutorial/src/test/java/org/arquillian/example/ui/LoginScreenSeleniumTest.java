@@ -19,6 +19,7 @@ package org.arquillian.example.ui;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -28,6 +29,7 @@ import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.exporter.ExplodedExporter;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
@@ -47,9 +49,21 @@ public class LoginScreenSeleniumTest {
             
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-    	File[] libs = Maven.resolver()
+    	System.out.println("************************************* 1");
+    	File[] libs = null;
+    	try {
+    		libs = Maven.resolver()
                 .loadPomFromFile("pom.xml").resolve("org.springframework:spring-webmvc")
                 .withTransitivity().as(File.class); 
+    		
+    		System.out.println("************************************* LIBS ");
+    		System.out.println(Arrays.toString(libs));
+    		System.out.println("************************************* LIBS ");
+    	} catch(Exception e){
+    		System.out.println("************************************* exception = "+e);
+    	}
+    	
+    	System.out.println("************************************* 2");
     	
     	WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "login.war")
             .addClasses(LoginController.class, User.class, Credentials.class)
@@ -64,8 +78,8 @@ public class LoginScreenSeleniumTest {
                 .setWebXML("web.xml")
                 .addAsWebInfResource("applicationContext.xml");
         
-//        System.out.println(webArchive.toString(true));
-//        webArchive.as(ExplodedExporter.class).exportExploded(new File("C:\\sergio\\aaaa"));
+        System.out.println(webArchive.toString(true));
+        webArchive.as(ExplodedExporter.class).exportExploded(new File("C:\\sergio\\aaaa"));
         
         return webArchive;
     }

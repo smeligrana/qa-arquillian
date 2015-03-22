@@ -8,7 +8,8 @@
     <container qualifier="jbossas-managed" default="true">
         <configuration>
             <!-- <property name="jbossHome">C:\\sergio\\jboss-as-7.1.1.Final</property> -->
-            <property name="jbossHome">target/jboss-as-7.1.1.Final</property>
+            <!-- <property name="jbossHome">target/jboss-as-7.1.1.Final</property> -->
+            <property name="jbossHome">target/wildfly-8.2.0.Final</property>
             <property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=128m -Xverify:none -XX:+UseFastAccessorMethods</property>
             <property name="outputToConsole">true</property>
         </configuration>
